@@ -3,8 +3,12 @@
 }
 
 <div class="row">
-    <div id="app" >
-        {{mensaje}}
+    <div id="app">
+        @*{{$data}}*@
+
+        <label> Nombre:</label>
+        @*<input type="text" v-model="Nombre" />*@
+        <p> {{ Nombre }} </p>
     </div>
 </div>
 
@@ -14,7 +18,18 @@
         var app = new Vue({
             el: "#app",
             data: {
-                mensaje: "Este es el mensaje"
+                Nombre: "Geovany Franco",
+                Edad: "31"
+            },
+            created: function () {
+                this.getPersona();
+            },
+            methods: {
+                getPersona: function () {
+                    this.$http.get("https://localhost:44365/api/persona").then(function (response) {
+                        this.Nombre = response.body;
+                    });
+                }
             }
         })
     </script>
