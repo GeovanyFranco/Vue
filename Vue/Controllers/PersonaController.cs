@@ -14,16 +14,28 @@ namespace Vue.Controllers
     {
 
         [HttpGet]
-        public Persona Get()
+        public List<Persona> Get()
         {
-            Persona oPersona = new Persona() { Nombre = "Geovanny" };
 
-            return oPersona;
+            List<Persona> lst = null;
+
+            using (Models.VueContext db = new Models.VueContext())
+            {
+                lst = (from p in db.Personas
+                       select new Persona
+                       {
+                           Nombre = p.Nombre,
+                           Edad= p.Edad
+                       }).ToList();
+            }
+
+            return lst;
         }
     }
 
     public class Persona
     {
         public string Nombre { get; set; }
+        public int Edad { get; set; }
     }
 }
